@@ -1,0 +1,53 @@
+;
+; K7 TITAN filesystem minifilter
+;
+[Version]
+Signature   = "$Windows NT$"
+Class       = "ActivityMonitor"
+ClassGuid   = {b86dff51-a31e-4bac-b3cf-e8cfe75c9fc2}
+Provider    = %ProviderString%
+DriverVer   = 10/10/2026,0.1.0.0
+CatalogFile = k7titan_filter.cat
+
+[DestinationDirs]
+DefaultDestDir = 12
+K7TitanMiniFilter.DriverFiles = 12
+
+[DefaultInstall]
+OptionType = 0x00000001
+CopyFiles  = K7TitanMiniFilter.DriverFiles
+
+[DefaultInstall.Services]
+AddService = K7Titan, 0x00000002, K7TitanMiniFilter.Service
+
+[DefaultUninstall]
+DelFiles   = K7TitanMiniFilter.DriverFiles
+
+[DefaultUninstall.Services]
+DelService = K7Titan,0x200
+
+[K7TitanMiniFilter.Service]
+DisplayName    = %ServiceName%
+Description    = %ServiceDescription%
+ServiceBinary  = %12%\k7titan_filter.sys
+ServiceType    = 2
+StartType      = 3
+ErrorControl   = 1
+LoadOrderGroup = "FSFilter Activity Monitor"
+AddReg         = K7TitanMiniFilter.AddRegistry
+
+[K7TitanMiniFilter.AddRegistry]
+HKR,,"SupportedFeatures",0x00010001,0x3
+HKR,"Instances","DefaultInstance",0x00000000,%Instance1.Name%
+HKR,"Instances\%Instance1.Name%","Altitude",0x00000000,%Instance1.Altitude%
+HKR,"Instances\%Instance1.Name%","Flags",0x00010001,0x1
+
+[K7TitanMiniFilter.DriverFiles]
+k7titan_filter.sys
+
+[Strings]
+ProviderString     = "K7 Titan"
+ServiceName        = "K7TitanRealtimeProtection"
+ServiceDescription = "K7 TITAN real-time filesystem protection minifilter"
+Instance1.Name     = "K7TitanDefaultInstance"
+Instance1.Altitude = "328100"

@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "generator": "k7titan-signature-gen",
+  "count": 2,
+  "signatures": [
+    {
+      "name": "EICAR-Test-File",
+      "sha256": "275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f",
+      "severity": "test"
+    },
+    {
+      "name": "README_MARKER.txt",
+      "sha256": "80f67afb73765ed80a74156b807815db26a4895d3bcb7c941989417827f8310c",
+      "sha1": "234e4344667b32bdcba9e477ab15a9d2cbfde263",
+      "md5": "fdce6f9bb7441633c1795b9eaa67500b",
+      "size": 15,
+      "entropy": 3.3736,
+      "severity": "sample"
+    }
+  ]
+}

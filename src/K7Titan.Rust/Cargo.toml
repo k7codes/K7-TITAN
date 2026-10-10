@@ -1,0 +1,11 @@
+[package]
+name = "k7titan_rust_core"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib", "cdylib"]
+
+[dependencies]
+sha2 = "0.10"
+hex = "0.4"

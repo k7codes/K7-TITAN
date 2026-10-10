@@ -1,0 +1,68 @@
+# Build outputs
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+ARM64/
+build/
+out/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+*.VC.db
+*.VC.VC.opendb
+*.opendb
+.vscode/*
+!.vscode/extensions.json
+
+# Rust
+target/
+
+# Java / Maven
+target/
+*.class
+.mvn/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Drivers
+*.sys
+*.cat
+*.inf.orig
+*.cer
+*.pvk
+
+# Native libs (built artifacts)
+*.dll
+*.lib
+*.exp
+*.pdb
+*.o
+*.obj
+
+# Keep important small files
+!data/signatures/db.json
+!data/sample/README_MARKER.txt
+
+# Runtime data
+data/quarantine/entries/
+data/quarantine/index.json
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# IDE
+.idea/
+*.iml

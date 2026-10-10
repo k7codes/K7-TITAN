@@ -1,0 +1,13 @@
+{
+  "name": "k7-sigserver",
+  "version": "0.1.0",
+  "description": "K7 TITAN signature update server and status API",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

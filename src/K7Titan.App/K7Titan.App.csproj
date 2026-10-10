@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\K7Titan.Core\K7Titan.Core.csproj" />
+    <ProjectReference Include="..\K7Titan.Realtime\K7Titan.Realtime.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WPF-UI" Version="4.3.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <Target Name="CopyNativeEngines" AfterTargets="Build">
+    <ItemGroup>
+      <NativeEngineDll Include="$(MSBuildThisFileDirectory)..\K7Titan.Engine\build\$(Configuration)\K7TitanEngine.dll" />
+      <NativeRustDll Include="$(MSBuildThisFileDirectory)..\K7Titan.Rust\target\release\k7titan_rust_core.dll" />
+      <RuleFile Include="$(MSBuildThisFileDirectory)..\..\rules\*.yar" />
+    </ItemGroup>
+    <Copy SourceFiles="@(NativeEngineDll)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="Exists('%(NativeEngineDll.FullPath)')" />
+    <Copy SourceFiles="@(NativeRustDll)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" Condition="Exists('%(NativeRustDll.FullPath)')" />
+    <Copy SourceFiles="@(RuleFile)" DestinationFolder="$(OutDir)rules" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

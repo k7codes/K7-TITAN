@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build (windows-latest)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build Rust crypto core
+        working-directory: src/K7Titan.Rust
+        run: cargo build --release
+
+      - name: Test Rust crypto core
+        working-directory: src/K7Titan.Rust
+        run: cargo test --release
+
+      - name: Configure C++ scan engine
+        run: cmake -S src/K7Titan.Engine -B src/K7Titan.Engine/build -A x64
+
+      - name: Build C++ scan engine
+        run: cmake --build src/K7Titan.Engine/build --config Debug
+
+      - name: Build C helper library
+        run: |
+          cmake -S src/K7Titan.CLib -B src/K7Titan.CLib/build -A x64
+          cmake --build src/K7Titan.CLib/build --config Debug
+
+      - name: Build Java analyzer
+        working-directory: src/K7Titan.Java
+        run: mvn -B -q package
+
+      - name: Build .NET solution
+        run: dotnet build K7Titan.sln --configuration Debug
+
+      - name: Run .NET tests (excluding EICAR suite)
+        run: dotnet test K7Titan.sln --configuration Debug --no-build --filter "FullyQualifiedName~ExclusionAndWalkerTests"
+
+      # NOTE: the EICAR end-to-end tests are intentionally not run on hosted
+      # runners because host antivirus may quarantine the test artifact.
+      # Run `dotnet test K7Titan.sln` locally instead.

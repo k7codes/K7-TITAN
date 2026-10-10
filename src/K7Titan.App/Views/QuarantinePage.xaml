@@ -1,0 +1,34 @@
+<UserControl x:Class="K7Titan.App.Views.QuarantinePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,14">
+            <TextBlock Text="Quarantine" FontSize="26" FontWeight="SemiBold"/>
+            <TextBlock Text="Files held in isolation. Nothing is deleted unless you confirm." Opacity="0.6" Margin="0,2,0,0"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10" HorizontalAlignment="Right">
+            <ui:Button Content="Refresh" Icon="{ui:SymbolIcon ArrowSync24}" Click="OnRefresh"/>
+            <ui:Button Content="Restore" Icon="{ui:SymbolIcon ArrowUndo24}" Appearance="Primary"
+                       Margin="8,0,0,0" Click="OnRestore"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="Grid" AutoGenerateColumns="False" IsReadOnly="True"
+                  HeadersVisibility="Column" GridLinesVisibility="None">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Threat" Binding="{Binding ThreatName}" Width="*"/>
+                <DataGridTextColumn Header="Original path" Binding="{Binding OriginalPath}" Width="2*"/>
+                <DataGridTextColumn Header="Score" Binding="{Binding Score}" Width="70"/>
+                <DataGridTextColumn Header="Decision" Binding="{Binding Decision}" Width="140"/>
+                <DataGridTextColumn Header="When" Binding="{Binding Timestamp}" Width="160"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
